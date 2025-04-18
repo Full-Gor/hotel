@@ -10,41 +10,36 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @keyframes fade-in {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes slide-up {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .animate-fade-in {
-            animation: fade-in 1s ease-out;
+        .animate-fade-in { animation: fade-in 1s ease-out; }
+        .animate-fade-in-delay { animation: fade-in 1s ease-out 0.3s both; }
+        .animate-slide-up { animation: slide-up 1s ease-out 0.6s both; }
+        html { scroll-behavior: smooth; }
+        [dir="rtl"] { direction: rtl; text-align: right; }
+
+        /* Style pour garantir la lisibilité des champs */
+        input, select {
+            color: black !important;
+            background-color: white;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            padding: 0.5rem;
         }
 
-        .animate-fade-in-delay {
-            animation: fade-in 1s ease-out 0.3s both;
-        }
-
-        .animate-slide-up {
-            animation: slide-up 1s ease-out 0.6s both;
-        }
-
-        html {
-            scroll-behavior: smooth;
+        #priceEstimate {
+            background-color: white;
+            color: black !important;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
         }
     </style>
 </head>
@@ -59,6 +54,7 @@
                     <option value="en">English</option>
                     <option value="es">Español</option>
                     <option value="de">Deutsch</option>
+                    <option value="ar">العربية</option>
                 </select>
             </div>
         </div>
@@ -69,50 +65,49 @@
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=80')">
             <div class="absolute inset-0 bg-black bg-opacity-50"></div>
         </div>
-        
         <div class="relative text-center text-white px-4">
-            <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-fade-in" data-lang-key="title">
-                Hôtel Le Luxe
-            </h1>
-            <p class="text-xl md:text-2xl mb-8 animate-fade-in-delay" data-lang-key="subtitle">
-                Découvrez nos chambres luxueuses pour un séjour inoubliable
-            </p>
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-fade-in" data-lang-key="title">Hôtel Le Luxe</h1>
+            <p class="text-xl md:text-2xl mb-8 animate-fade-in-delay" data-lang-key="subtitle">Découvrez nos chambres luxueuses pour un séjour inoubliable</p>
             <div class="bg-white p-4 rounded-lg shadow-lg max-w-4xl mx-auto animate-slide-up">
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="flex-1">
-                        <input type="date" class="w-full p-2 border rounded" placeholder="Date d'arrivée">
+                        <input type="date" id="checkIn" class="w-full p-2 border rounded">
                     </div>
                     <div class="flex-1">
-                        <input type="date" class="w-full p-2 border rounded" placeholder="Date de départ">
+                        <input type="date" id="checkOut" class="w-full p-2 border rounded">
                     </div>
                     <div class="flex-1">
-                        <select class="w-full p-2 border rounded">
-                            <option>1 Chambre</option>
-                            <option>2 Chambres</option>
-                            <option>3 Chambres</option>
-                            <option>4 Chambres</option>
+                        <select id="roomType" class="w-full p-2 border rounded">
+                            <option value="0">Choisir une chambre</option>
+                            <option value="1">Chambre Deluxe Vue Mer (199€)</option>
+                            <option value="2">Suite Junior (299€)</option>
+                            <option value="3">Chambre Familiale (249€)</option>
                         </select>
                     </div>
                     <div class="flex-1">
-                        <select class="w-full p-2 border rounded">
-                            <option>1 Adulte</option>
-                            <option>2 Adultes</option>
-                            <option>3 Adultes</option>
-                            <option>4 Adultes</option>
+                        <select id="adults" class="w-full p-2 border rounded">
+                            <option value="1">1 Adulte</option>
+                            <option value="2">2 Adultes</option>
+                            <option value="3">3 Adultes</option>
+                            <option value="4">4 Adultes</option>
                         </select>
                     </div>
                     <div class="flex-1">
-                        <select class="w-full p-2 border rounded">
-                            <option>0 Enfant</option>
-                            <option>1 Enfant</option>
-                            <option>2 Enfants</option>
-                            <option>3 Enfants</option>
+                        <select id="children" class="w-full p-2 border rounded">
+                            <option value="0">0 Enfant</option>
+                            <option value="1">1 Enfant</option>
+                            <option value="2">2 Enfants</option>
+                            <option value="3">3 Enfants</option>
                         </select>
                     </div>
-                    <button class="bg-blue-600 text-white px-8 py-2 rounded hover:bg-blue-700 transition-colors flex items-center justify-center">
+                    <button id="searchBtn" class="bg-blue-600 text-white px-8 py-2 rounded hover:bg-blue-700 transition-colors flex items-center justify-center">
                         <i data-lucide="search" class="w-5 h-5 mr-2"></i>
                         <span data-lang-key="search">Rechercher</span>
                     </button>
+                </div>
+                <div id="priceEstimate" class="mt-4 text-black">
+                    <p class="font-semibold" data-lang-key="estimatedPrice">Prix estimé :</p>
+                    <p id="estimateResult" class="text-lg"></p>
                 </div>
             </div>
         </div>
@@ -121,22 +116,22 @@
     <!-- Services Section -->
     <section class="py-20 px-4 bg-white">
         <div class="max-w-6xl mx-auto">
-            <h2 class="text-4xl font-bold text-center mb-12">Nos Services</h2>
+            <h2 class="text-4xl font-bold text-center mb-12" data-lang-key="services">Nos Services</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="p-6 bg-gray-50 rounded-lg">
                     <i data-lucide="utensils" class="w-12 h-12 text-blue-600 mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-2">Restaurant Gastronomique</h3>
-                    <p>Restaurant étoilé avec vue panoramique sur Paris. Menu dégustation et carte des vins exceptionnelle.</p>
+                    <h3 class="text-xl font-semibold mb-2" data-lang-key="restaurant">Restaurant Gastronomique</h3>
+                    <p data-lang-key="restaurantDesc">Restaurant étoilé avec vue panoramique sur Paris. Menu dégustation et carte des vins exceptionnelle.</p>
                 </div>
                 <div class="p-6 bg-gray-50 rounded-lg">
                     <i data-lucide="spa" class="w-12 h-12 text-blue-600 mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-2">Spa & Bien-être</h3>
-                    <p>Espace détente avec piscine intérieure, sauna, hammam et soins spa personnalisés.</p>
+                    <h3 class="text-xl font-semibold mb-2" data-lang-key="spa">Spa & Bien-être</h3>
+                    <p data-lang-key="spaDesc">Espace détente avec piscine intérieure, sauna, hammam et soins spa personnalisés.</p>
                 </div>
                 <div class="p-6 bg-gray-50 rounded-lg">
                     <i data-lucide="dumbbell" class="w-12 h-12 text-blue-600 mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-2">Salle de Sport</h3>
-                    <p>Centre de fitness moderne avec équipements haut de gamme et coaches personnels.</p>
+                    <h3 class="text-xl font-semibold mb-2" data-lang-key="gym">Salle de Sport</h3>
+                    <p data-lang-key="gymDesc">Centre de fitness moderne avec équipements haut de gamme et coaches personnels.</p>
                 </div>
             </div>
         </div>
@@ -146,66 +141,35 @@
     <section class="py-20 px-4" id="chambres">
         <div class="max-w-6xl mx-auto">
             <h2 class="text-4xl font-bold text-center mb-12" data-lang-key="rooms">Nos Chambres</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="roomsContainer">
-                <!-- Rooms will be dynamically inserted here -->
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="roomsContainer"></div>
         </div>
     </section>
 
     <!-- Location Section -->
     <section class="py-20 px-4 bg-gray-100">
         <div class="max-w-6xl mx-auto">
-            <h2 class="text-4xl font-bold text-center mb-12">Notre Emplacement</h2>
+            <h2 class="text-4xl font-bold text-center mb-12" data-lang-key="location">Notre Emplacement</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                 <div>
                     <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80" alt="Paris" class="rounded-lg shadow-lg">
                 </div>
                 <div class="space-y-6">
-                    <h3 class="text-2xl font-semibold">Au Cœur de Paris</h3>
-                    <p class="text-lg">Situé sur les prestigieux Champs-Élysées, notre hôtel vous offre un accès privilégié aux plus beaux sites de Paris :</p>
+                    <h3 class="text-2xl font-semibold" data-lang-key="paris">Au Cœur de Paris</h3>
+                    <p class="text-lg" data-lang-key="parisDesc">Situé sur les prestigieux Champs-Élysées, notre hôtel vous offre un accès privilégié aux plus beaux sites de Paris :</p>
                     <ul class="space-y-4">
                         <li class="flex items-center">
                             <i data-lucide="check" class="w-6 h-6 text-green-500 mr-2"></i>
-                            <span>5 minutes à pied de l'Arc de Triomphe</span>
+                            <span data-lang-key="arc">5 minutes à pied de l'Arc de Triomphe</span>
                         </li>
                         <li class="flex items-center">
                             <i data-lucide="check" class="w-6 h-6 text-green-500 mr-2"></i>
-                            <span>15 minutes de la Tour Eiffel</span>
+                            <span data-lang-key="eiffel">15 minutes de la Tour Eiffel</span>
                         </li>
                         <li class="flex items-center">
                             <i data-lucide="check" class="w-6 h-6 text-green-500 mr-2"></i>
-                            <span>Accès direct au métro (station George V)</span>
+                            <span data-lang-key="metro">Accès direct au métro (station George V)</span>
                         </li>
                     </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Activities Section -->
-    <section class="py-20 px-4">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-4xl font-bold text-center mb-12">Activités & Attractions</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <i data-lucide="shopping-bag" class="w-10 h-10 text-blue-600 mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-2">Shopping</h3>
-                    <p>Boutiques de luxe et grands magasins à proximité</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <i data-lucide="palette" class="w-10 h-10 text-blue-600 mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-2">Culture</h3>
-                    <p>Musées et galeries d'art renommés</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <i data-lucide="wine" class="w-10 h-10 text-blue-600 mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-2">Gastronomie</h3>
-                    <p>Restaurants étoilés et cafés parisiens</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <i data-lucide="music" class="w-10 h-10 text-blue-600 mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-2">Divertissement</h3>
-                    <p>Théâtres et salles de spectacle</p>
                 </div>
             </div>
         </div>
@@ -232,103 +196,286 @@
                 </div>
                 <form class="space-y-4">
                     <input type="text" data-lang-key="name" placeholder="Nom" class="w-full p-2 border rounded">
-                    <input type="email" placeholder="Email" class="w-full p-2 border rounded">
+                    <input type="email" data-lang-key="email" placeholder="Email" class="w-full p-2 border rounded">
                     <textarea data-lang-key="message" placeholder="Message" class="w-full p-2 border rounded h-32"></textarea>
-                    <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors" data-lang-key="send">
-                        Envoyer
-                    </button>
+                    <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors" data-lang-key="send">Envoyer</button>
                 </form>
             </div>
         </div>
     </section>
 
-    <!-- Scroll to Top Button -->
-    <button id="scrollTopBtn" class="fixed bottom-8 right-8 bg-blue-600 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:bg-blue-700 opacity-0 translate-y-16">
-        <i data-lucide="arrow-up" class="w-6 h-6"></i>
-    </button>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6" data-lang-key="title">Hôtel Le Luxe</h3>
+                    <p class="mb-4" data-lang-key="footerDescription">Vivez une expérience inoubliable au cœur de Paris dans notre établissement 5 étoiles.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-6" data-lang-key="quickLinks">Liens Rapides</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="hover:text-blue-400 transition-colors" data-lang-key="home">Accueil</a></li>
+                        <li><a href="#chambres" class="hover:text-blue-400 transition-colors" data-lang-key="rooms">Nos Chambres</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors" data-lang-key="restaurant">Restaurant</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors" data-lang-key="spa">Spa & Bien-être</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-6" data-lang-key="contact">Contact</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i data-lucide="map-pin" class="w-5 h-5 text-blue-400 mr-3 mt-1"></i>
+                            <span>123 Avenue des Champs-Élysées, 75008 Paris</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="phone" class="w-5 h-5 text-blue-400 mr-3"></i>
+                            <span>+33 1 23 45 67 89</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-lucide="mail" class="w-5 h-5 text-blue-400 mr-3"></i>
+                            <span>contact@hotelluxe.fr</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-6" data-lang-key="newsletter">Newsletter</h3>
+                    <p class="mb-4" data-lang-key="newsletterDescription">Inscrivez-vous pour recevoir nos offres spéciales</p>
+                    <form class="space-y-3">
+                        <input type="email" data-lang-key="emailPlaceholder" placeholder="Votre email" class="w-full p-3 bg-gray-800 border border-gray-700 rounded">
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded" data-lang-key="subscribe">S'inscrire</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 my-12"></div>
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p data-lang-key="copyright">© 2025 Hôtel Le Luxe. Tous droits réservés.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-blue-400" data-lang-key="legalNotice">Mentions légales</a>
+                    <a href="#" class="hover:text-blue-400" data-lang-key="privacyPolicy">Politique de confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
-
-        // Rooms data
-        const rooms = [
-            {
-                id: 1,
-                title: 'Chambre Deluxe Vue Mer',
-                price: 199,
-                image: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=800&q=80',
-                rating: 4.8
-            },
-            {
-                id: 2,
-                title: 'Suite Junior',
-                price: 299,
-                image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80',
-                rating: 4.9
-            },
-            {
-                id: 3,
-                title: 'Chambre Familiale',
-                price: 249,
-                image: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80',
-                rating: 4.7
-            }
-        ];
-
-        // Language data
+        // Données des langues
         const languages = {
             fr: {
-                title: 'Hôtel Le Luxe',
-                subtitle: 'Découvrez nos chambres luxueuses pour un séjour inoubliable',
-                search: 'Rechercher',
-                rooms: 'Nos Chambres',
-                book: 'Réserver',
-                contact: 'Contact',
-                send: 'Envoyer',
-                perNight: '/ nuit',
-                name: 'Nom',
-                message: 'Message'
+                title: "Hôtel Le Luxe",
+                subtitle: "Découvrez nos chambres luxueuses pour un séjour inoubliable",
+                search: "Rechercher",
+                estimatedPrice: "Prix estimé :",
+                services: "Nos Services",
+                restaurant: "Restaurant Gastronomique",
+                restaurantDesc: "Restaurant étoilé avec vue panoramique sur Paris.",
+                spa: "Spa & Bien-être",
+                spaDesc: "Espace détente avec piscine intérieure, sauna, hammam.",
+                gym: "Salle de Sport",
+                gymDesc: "Centre de fitness moderne avec équipements haut de gamme.",
+                rooms: "Nos Chambres",
+                perNight: "/ nuit",
+                book: "Réserver",
+                location: "Notre Emplacement",
+                paris: "Au Cœur de Paris",
+                parisDesc: "Situé sur les prestigieux Champs-Élysées, notre hôtel vous offre un accès privilégié.",
+                arc: "5 minutes à pied de l'Arc de Triomphe",
+                eiffel: "15 minutes de la Tour Eiffel",
+                metro: "Accès direct au métro (station George V)",
+                contact: "Contact",
+                name: "Nom",
+                email: "Email",
+                message: "Message",
+                send: "Envoyer",
+                footerDescription: "Vivez une expérience inoubliable au cœur de Paris dans notre établissement 5 étoiles.",
+                quickLinks: "Liens Rapides",
+                home: "Accueil",
+                newsletter: "Newsletter",
+                newsletterDescription: "Inscrivez-vous pour recevoir nos offres spéciales",
+                emailPlaceholder: "Votre email",
+                subscribe: "S'inscrire",
+                copyright: "© 2025 Hôtel Le Luxe. Tous droits réservés.",
+                legalNotice: "Mentions légales",
+                privacyPolicy: "Politique de confidentialité",
+                nights: "nuits",
+                invalidDates: "Veuillez sélectionner des dates valides.",
+                selectRoom: "Veuillez sélectionner une chambre."
             },
             en: {
-                title: 'Le Luxe Hotel',
-                subtitle: 'Discover our luxurious rooms for an unforgettable stay',
-                search: 'Search',
-                rooms: 'Our Rooms',
-                book: 'Book Now',
-                contact: 'Contact',
-                send: 'Send',
-                perNight: '/ night',
-                name: 'Name',
-                message: 'Message'
+                title: "Le Luxe Hotel",
+                subtitle: "Discover our luxurious rooms for an unforgettable stay",
+                search: "Search",
+                estimatedPrice: "Estimated Price:",
+                services: "Our Services",
+                restaurant: "Gourmet Restaurant",
+                restaurantDesc: "Michelin-starred restaurant with panoramic views of Paris.",
+                spa: "Spa & Wellness",
+                spaDesc: "Relaxation area with indoor pool, sauna, and hammam.",
+                gym: "Fitness Center",
+                gymDesc: "Modern fitness center with high-end equipment.",
+                rooms: "Our Rooms",
+                perNight: "/ night",
+                book: "Book Now",
+                location: "Our Location",
+                paris: "In the Heart of Paris",
+                parisDesc: "Located on the prestigious Champs-Élysées, our hotel offers privileged access.",
+                arc: "5 minutes walk from the Arc de Triomphe",
+                eiffel: "15 minutes from the Eiffel Tower",
+                metro: "Direct metro access (George V station)",
+                contact: "Contact",
+                name: "Name",
+                email: "Email",
+                message: "Message",
+                send: "Send",
+                footerDescription: "Experience an unforgettable stay in the heart of Paris at our 5-star hotel.",
+                quickLinks: "Quick Links",
+                home: "Home",
+                newsletter: "Newsletter",
+                newsletterDescription: "Sign up to receive our special offers",
+                emailPlaceholder: "Your email",
+                subscribe: "Subscribe",
+                copyright: "© 2025 Le Luxe Hotel. All rights reserved.",
+                legalNotice: "Legal Notice",
+                privacyPolicy: "Privacy Policy",
+                nights: "nights",
+                invalidDates: "Please select valid dates.",
+                selectRoom: "Please select a room."
             },
             es: {
-                title: 'Hotel Le Luxe',
-                subtitle: 'Descubre nuestras lujosas habitaciones para una estancia inolvidable',
-                search: 'Buscar',
-                rooms: 'Nuestras Habitaciones',
-                book: 'Reservar',
-                contact: 'Contacto',
-                send: 'Enviar',
-                perNight: '/ noche',
-                name: 'Nombre',
-                message: 'Mensaje'
+                title: "Hotel Le Luxe",
+                subtitle: "Descubre nuestras lujosas habitaciones para una estancia inolvidable",
+                search: "Buscar",
+                estimatedPrice: "Precio estimado:",
+                services: "Nuestros Servicios",
+                restaurant: "Restaurante Gourmet",
+                restaurantDesc: "Restaurante con estrella Michelin y vistas panorámicas de París.",
+                spa: "Spa y Bienestar",
+                spaDesc: "Zona de relajación con piscina cubierta, sauna y hammam.",
+                gym: "Gimnasio",
+                gymDesc: "Centro de fitness moderno con equipos de alta gama.",
+                rooms: "Nuestras Habitaciones",
+                perNight: "/ noche",
+                book: "Reservar",
+                location: "Nuestra Ubicación",
+                paris: "En el Corazón de París",
+                parisDesc: "Ubicado en los prestigiosos Campos Elíseos, nuestro hotel ofrece acceso privilegiado.",
+                arc: "5 minutos a pie del Arco de Triunfo",
+                eiffel: "15 minutos de la Torre Eiffel",
+                metro: "Acceso directo al metro (estación George V)",
+                contact: "Contacto",
+                name: "Nombre",
+                email: "Correo",
+                message: "Mensaje",
+                send: "Enviar",
+                footerDescription: "Vive una experiencia inolvidable en el corazón de París en nuestro hotel de 5 estrellas.",
+                quickLinks: "Enlaces Rápidos",
+                home: "Inicio",
+                newsletter: "Boletín",
+                newsletterDescription: "Suscríbete para recibir nuestras ofertas especiales",
+                emailPlaceholder: "Tu correo electrónico",
+                subscribe: "Suscribirse",
+                copyright: "© 2025 Hotel Le Luxe. Todos los derechos reservados.",
+                legalNotice: "Aviso Legal",
+                privacyPolicy: "Política de Privacidad",
+                nights: "noches",
+                invalidDates: "Por favor, selecciona fechas válidas.",
+                selectRoom: "Por favor, selecciona una habitación."
             },
             de: {
-                title: 'Hotel Le Luxe',
-                subtitle: 'Entdecken Sie unsere luxuriösen Zimmer für einen unvergesslichen Aufenthalt',
-                search: 'Suchen',
-                rooms: 'Unsere Zimmer',
-                book: 'Buchen',
-                contact: 'Kontakt',
-                send: 'Senden',
-                perNight: '/ Nacht',
-                name: 'Name',
-                message: 'Nachricht'
+                title: "Hotel Le Luxe",
+                subtitle: "Entdecken Sie unsere luxuriösen Zimmer für einen unvergesslichen Aufenthalt",
+                search: "Suchen",
+                estimatedPrice: "Geschätzter Preis:",
+                services: "Unsere Dienstleistungen",
+                restaurant: "Gourmet-Restaurant",
+                restaurantDesc: "Mit Michelin-Stern ausgezeichnetes Restaurant mit Panoramablick auf Paris.",
+                spa: "Spa & Wellness",
+                spaDesc: "Entspannungsbereich mit Innenpool, Sauna und Hammam.",
+                gym: "Fitnesscenter",
+                gymDesc: "Modernes Fitnesscenter mit hochwertigen Geräten.",
+                rooms: "Unsere Zimmer",
+                perNight: "/ Nacht",
+                book: "Buchen",
+                location: "Unsere Lage",
+                paris: "Im Herzen von Paris",
+                parisDesc: "Unser Hotel liegt an den prestigeträchtigen Champs-Élysées und bietet privilegierten Zugang.",
+                arc: "5 Minuten zu Fuß vom Triumphbogen",
+                eiffel: "15 Minuten vom Eiffelturm",
+                metro: "Direkter Zugang zur Metro (Station George V)",
+                contact: "Kontakt",
+                name: "Name",
+                email: "E-Mail",
+                message: "Nachricht",
+                send: "Senden",
+                footerDescription: "Erleben Sie einen unvergesslichen Aufenthalt im Herzen von Paris in unserem 5-Sterne-Hotel.",
+                quickLinks: "Schnelllinks",
+                home: "Startseite",
+                newsletter: "Newsletter",
+                newsletterDescription: "Abonnieren Sie, um unsere Sonderangebote zu erhalten",
+                emailPlaceholder: "Ihre E-Mail",
+                subscribe: "Abonnieren",
+                copyright: "© 2025 Hotel Le Luxe. Alle Rechte vorbehalten.",
+                legalNotice: "Impressum",
+                privacyPolicy: "Datenschutzrichtlinie",
+                nights: "Nächte",
+                invalidDates: "Bitte wählen Sie gültige Daten aus.",
+                selectRoom: "Bitte wählen Sie ein Zimmer aus."
+            },
+            ar: {
+                title: "فندق لو لوكس",
+                subtitle: "اكتشف غرفنا الفاخرة لإقامة لا تُنسى",
+                search: "بحث",
+                estimatedPrice: "السعر المقدر:",
+                services: "خدماتنا",
+                restaurant: "مطعم فاخر",
+                restaurantDesc: "مطعم حاصل على نجمة ميشلان مع إطلالات بانورامية على باريس.",
+                spa: "سبا والعافية",
+                spaDesc: "منطقة استرخاء مع مسبح داخلي وساونا وحمام تقليدي.",
+                gym: "مركز لياقة بدنية",
+                gymDesc: "مركز لياقة بدنية حديث مع معدات عالية الجودة.",
+                rooms: "غرفنا",
+                perNight: "/ ليلة",
+                book: "احجز الآن",
+                location: "موقعنا",
+                paris: "في قلب باريس",
+                parisDesc: "يقع فندقنا في الشانزليزيه المرموق، ويوفر وصولاً مميزاً.",
+                arc: "5 دقائق سيرًا على الأقدام من قوس النصر",
+                eiffel: "15 دقيقة من برج إيفل",
+                metro: "وصول مباشر إلى المترو (محطة جورج الخامس)",
+                contact: "اتصل بنا",
+                name: "الاسم",
+                email: "البريد الإلكتروني",
+                message: "الرسالة",
+                send: "إرسال",
+                footerDescription: "عش تجربة لا تُنسى في قلب باريس في فندقنا ذو الخمس نجوم.",
+                quickLinks: "روابط سريعة",
+                home: "الرئيسية",
+                newsletter: "النشرة الإخبارية",
+                newsletterDescription: "اشترك لتلقي عروضنا الخاصة",
+                emailPlaceholder: "بريدك الإلكتروني",
+                subscribe: "اشتراك",
+                copyright: "© 2025 فندق لو لوكس. جميع الحقوق محفوظة.",
+                legalNotice: "إشعار قانوني",
+                privacyPolicy: "سياسة الخصوصية",
+                nights: "ليالي",
+                invalidDates: "يرجى اختيار تواريخ صالحة.",
+                selectRoom: "يرجى اختيار غرفة."
             }
         };
 
-        // Render rooms
+        // Données des chambres
+        const rooms = [
+            { id: 1, title: 'Chambre Deluxe Vue Mer', price: 199, image: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=800&q=80', rating: 4.8 },
+            { id: 2, title: 'Suite Junior', price: 299, image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80', rating: 4.9 },
+            { id: 3, title: 'Chambre Familiale', price: 249, image: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&q=80', rating: 4.7 }
+        ];
+
+        // Initialiser les icônes Lucide
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+
+        // Afficher les chambres
         function renderRooms() {
             const container = document.getElementById('roomsContainer');
             container.innerHTML = rooms.map(room => `
@@ -342,162 +489,75 @@
                                 <span class="ml-1">${room.rating}</span>
                             </div>
                         </div>
-                        <p class="text-2xl font-bold text-blue-600 mb-4">
-                            ${room.price}€ <span class="text-sm text-gray-500" data-lang-key="perNight">/ nuit</span>
-                        </p>
-                        <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors" data-lang-key="book">
-                            Réserver
-                        </button>
+                        <p class="text-2xl font-bold text-blue-600 mb-4">${room.price}€ <span class="text-sm text-gray-500" data-lang-key="perNight">/ nuit</span></p>
+                        <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors" data-lang-key="book">Réserver</button>
                     </div>
                 </div>
             `).join('');
             lucide.createIcons();
         }
 
-        // Language switcher
+        // Mettre à jour la langue
         function updateLanguage(lang) {
             document.querySelectorAll('[data-lang-key]').forEach(element => {
                 const key = element.getAttribute('data-lang-key');
-                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                    element.placeholder = languages[lang][key];
-                } else {
-                    element.textContent = languages[lang][key];
+                if (languages[lang][key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = languages[lang][key];
+                    } else {
+                        element.textContent = languages[lang][key];
+                    }
                 }
             });
+            document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
         }
 
-        // Scroll to top functionality
-        const scrollTopBtn = document.getElementById('scrollTopBtn');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                scrollTopBtn.classList.replace('opacity-0', 'opacity-100');
-                scrollTopBtn.classList.replace('translate-y-16', 'translate-y-0');
-            } else {
-                scrollTopBtn.classList.replace('opacity-100', 'opacity-0');
-                scrollTopBtn.classList.replace('translate-y-0', 'translate-y-16');
+        // Calculer le prix
+        function calculatePrice() {
+            const checkIn = new Date(document.getElementById('checkIn').value);
+            const checkOut = new Date(document.getElementById('checkOut').value);
+            const roomType = parseInt(document.getElementById('roomType').value);
+            const adults = parseInt(document.getElementById('adults').value);
+            const children = parseInt(document.getElementById('children').value);
+            const estimateResult = document.getElementById('estimateResult');
+            const currentLang = document.getElementById('langSelect').value;
+
+            // Validation
+            if (isNaN(checkIn.getTime()) || isNaN(checkOut.getTime()) || checkOut <= checkIn) {
+                estimateResult.textContent = languages[currentLang].invalidDates;
+                return;
             }
-        });
+            if (roomType === 0) {
+                estimateResult.textContent = languages[currentLang].selectRoom;
+                return;
+            }
 
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+            // Calculer les nuits
+            const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
 
-        // Language selector
-        document.getElementById('langSelect').addEventListener('change', (e) => {
-            updateLanguage(e.target.value);
-        });
+            // Obtenir le prix de la chambre
+            const selectedRoom = rooms.find(room => room.id === roomType);
+            let totalPrice = selectedRoom.price;
 
-        // Initialize
-        renderRooms();
-        updateLanguage('fr');
+            // Suppléments
+            const extraAdultFee = 20; // Par adulte au-delà de 2
+            const childFee = 10; // Par enfant
+            if (adults > 2) totalPrice += (adults - 2) * extraAdultFee;
+            totalPrice += children * childFee;
+            totalPrice *= nights;
+
+            // Afficher le résultat
+            estimateResult.textContent = `${totalPrice.toFixed(2)}€ (${nights} ${languages[currentLang].nights})`;
+        }
+
+        // Écouteurs d'événements
+        document.addEventListener('DOMContentLoaded', () => {
+            renderRooms();
+            updateLanguage('fr');
+
+            document.getElementById('searchBtn').addEventListener('click', calculatePrice);
+            document.getElementById('langSelect').addEventListener('change', (e) => updateLanguage(e.target.value));
+        });
     </script>
-    <!-- Footer -->
-<footer class="bg-gray-900 text-white py-16">
-    <div class="max-w-6xl mx-auto px-4">
-        <!-- Main Footer Content -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-            <!-- Hotel Info -->
-            <div>
-                <h3 class="text-2xl font-bold mb-6">Hôtel Le Luxe</h3>
-                <p class="mb-4">Vivez une expérience inoubliable au cœur de Paris dans notre établissement 5 étoiles.</p>
-                <div class="flex space-x-4 mt-6">
-                    <a href="#" class="bg-blue-600 hover:bg-blue-700 transition-colors p-2 rounded-full">
-                        <i data-lucide="facebook" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#" class="bg-blue-600 hover:bg-blue-700 transition-colors p-2 rounded-full">
-                        <i data-lucide="instagram" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#" class="bg-blue-600 hover:bg-blue-700 transition-colors p-2 rounded-full">
-                        <i data-lucide="twitter" class="w-5 h-5"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Quick Links -->
-            <div>
-                <h3 class="text-xl font-semibold mb-6">Liens Rapides</h3>
-                <ul class="space-y-3">
-                    <li>
-                        <a href="#" class="hover:text-blue-400 transition-colors flex items-center">
-                            <i data-lucide="chevron-right" class="w-4 h-4 mr-2"></i>
-                            Accueil
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#chambres" class="hover:text-blue-400 transition-colors flex items-center">
-                            <i data-lucide="chevron-right" class="w-4 h-4 mr-2"></i>
-                            Nos Chambres
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="hover:text-blue-400 transition-colors flex items-center">
-                            <i data-lucide="chevron-right" class="w-4 h-4 mr-2"></i>
-                            Restaurant
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="hover:text-blue-400 transition-colors flex items-center">
-                            <i data-lucide="chevron-right" class="w-4 h-4 mr-2"></i>
-                            Spa & Bien-être
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="hover:text-blue-400 transition-colors flex items-center">
-                            <i data-lucide="chevron-right" class="w-4 h-4 mr-2"></i>
-                            Activités
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Contact Info -->
-            <div>
-                <h3 class="text-xl font-semibold mb-6">Contact</h3>
-                <ul class="space-y-4">
-                    <li class="flex items-start">
-                        <i data-lucide="map-pin" class="w-5 h-5 text-blue-400 mr-3 mt-1 flex-shrink-0"></i>
-                        <span>123 Avenue des Champs-Élysées, 75008 Paris, France</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i data-lucide="phone" class="w-5 h-5 text-blue-400 mr-3 flex-shrink-0"></i>
-                        <span>+33 1 23 45 67 89</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i data-lucide="mail" class="w-5 h-5 text-blue-400 mr-3 flex-shrink-0"></i>
-                        <span>contact@hotelluxe.fr</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Newsletter -->
-            <div>
-                <h3 class="text-xl font-semibold mb-6">Newsletter</h3>
-                <p class="mb-4">Inscrivez-vous pour recevoir nos offres spéciales</p>
-                <form class="space-y-3">
-                    <input type="email" placeholder="Votre email" class="w-full p-3 bg-gray-800 border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 transition-colors py-3 px-4 rounded font-medium flex items-center justify-center">
-                        <i data-lucide="send" class="w-4 h-4 mr-2"></i>
-                        S'inscrire
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        <!-- Divider -->
-        <div class="border-t border-gray-800 my-12"></div>
-
-        <!-- Bottom Footer -->
-        <div class="flex flex-col md:flex-row justify-between items-center">
-            <div class="mb-4 md:mb-0">
-                <p>&copy; 2025 Hôtel Le Luxe. Tous droits réservés.</p>
-            </div>
-            <div class="flex space-x-6">
-                <a href="#" class="hover:text-blue-400 transition-colors">Mentions légales</a>
-                <a href="#" class="hover:text-blue-400 transition-colors">Politique de confidentialité</a>
-                <a href="#" class="hover:text-blue-400 transition-colors">CGV</a>
-            </div>
-        </div>
-    </div>
-</footer>
 </body>
 </html>
